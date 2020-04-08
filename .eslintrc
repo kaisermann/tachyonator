@@ -1,6 +1,7 @@
 {
-  "extends": ["kaisermann"],
-  "parserOptions": {
-    "sourceType": "module"
+  "extends": ["kaisermann/typescript"],
+  "env": {
+    "node": true,
+    "jest": true
   }
 }
