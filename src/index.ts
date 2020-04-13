@@ -1,4 +1,5 @@
-import { builders } from './builders';
+import mqify from 'mqify';
+
 import { renderRules, renderVars } from './modules/rule';
 import manifest from './manifest';
 import { camelToKebab } from './modules/case';
@@ -10,28 +11,42 @@ function build(builder, config) {
   return { rules, vars };
 }
 
-function assemble({ css, vars }) {
-  return [renderVars(vars), css].join('\n\n');
+function assemble({ cssParts, vars }) {
+  return [renderVars(vars), cssParts.join('\n')].join('\n\n');
 }
 
 export async function main(config) {
-  const output = [];
+  const cssParts = [];
+  const mqParts = [];
   const vars = [];
 
-  for (const [entry, { mq }] of Object.entries<any>(manifest)) {
-    if (entry in builders) {
-      const { rules: builderRules, vars: builderVars } = build(
-        builders[entry],
-        config,
-      );
-      output.push(renderRules(builderRules));
+  const manifestEntries = Object.entries<any>(manifest);
+
+  for (const [entry, { builder, mq }] of manifestEntries) {
+    let rendered = null;
+
+    if (builder) {
+      const { rules: builderRules, vars: builderVars } = build(builder, config);
+      rendered = renderRules(builderRules);
       vars.push(...builderVars);
     } else {
       const { default: css } = await import(
         `./static/_${camelToKebab(entry)}.css`
       );
-      output.push(css);
+      rendered = css;
+    }
+
+    if (mq) {
+      mqParts.push(rendered);
+    } else {
+      cssParts.push(rendered);
     }
   }
-  console.log(assemble({ vars, css: output }));
+
+  if (mqParts.length > 0) {
+    const mqfied = await mqify(mqParts.join('\n'), config.customMedia);
+    cssParts.push(mqfied);
+  }
+
+  return assemble({ vars, cssParts });
 }
