@@ -9,6 +9,7 @@ import lineHeight from './builders/lineHeight';
 import widths from './builders/widths';
 import typography from './builders/typography';
 import nested from './builders/nested';
+import print from './builders/print';
 import { renderRules, renderVars } from './modules/rule';
 
 function build(builders, config) {
@@ -41,7 +42,8 @@ export function main(config) {
     // height,
     // widths,
     // typography,
-    nested,
+    // nested,
+    print,
   ];
   const { rules, vars } = build(builders, config);
   console.log(renderRules(rules));
