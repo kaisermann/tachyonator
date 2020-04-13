@@ -12,7 +12,7 @@ function rules(config) {
 
   rules.push(
     ...typography.measure.map((val, i) =>
-      createRule(MEASURE_MAP[i], { 'max-width': `${typography.measure[i]}em` }),
+      createRule(`.${MEASURE_MAP[i]}`, { 'max-width': `${typography.measure[i]}em` }),
     ),
     createRule('.small-caps', { 'font-variant': 'small-caps' }),
     createRule('.indent', {

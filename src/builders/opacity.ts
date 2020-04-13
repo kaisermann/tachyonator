@@ -1,4 +1,4 @@
-import { createRule, getVar } from '../modules/rule';
+import { createRule } from '../modules/rule';
 
 function getOpacityStep(step) {
   if (step === 0) return 0;
@@ -19,22 +19,12 @@ function rules(config) {
 
   opacityValues.forEach(value => {
     const stepName = getOpacityStep(value);
-    rules.push(
-      createRule(`.o-${stepName}`, { opacity: getVar('opacity', stepName) }),
-    );
+    rules.push(createRule(`.o-${stepName}`, { opacity: value }));
   });
 
   return rules;
 }
 
-function vars(config) {
-  return config.opacity.map(value => [
-    `opacity-${getOpacityStep(value)}`,
-    value,
-  ]);
-}
-
 export default {
   rules,
-  vars,
 };

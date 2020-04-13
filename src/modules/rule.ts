@@ -17,9 +17,7 @@ export function renderRules(rules) {
 }
 
 export function renderVars(vars) {
-  const decls = Object.entries(vars)
-    .map(([key, value]) => `\t--${key}: ${value}`)
-    .join(';\n');
+  const decls = vars.map(([key, value]) => `\t--${key}: ${value}`).join(';\n');
 
   return `:root {\n${decls}\n}`;
 }
