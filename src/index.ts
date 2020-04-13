@@ -7,6 +7,8 @@ import colors from './builders/colors';
 import height from './builders/height';
 import lineHeight from './builders/lineHeight';
 import widths from './builders/widths';
+import typography from './builders/typography';
+import nested from './builders/nested';
 import { renderRules, renderVars } from './modules/rule';
 
 function build(builders, config) {
@@ -35,9 +37,11 @@ export function main(config) {
     // borderRules,
     // semanticColors,
     // colors,
-    height,
     // lineHeight,
+    // height,
     // widths,
+    // typography,
+    nested,
   ];
   const { rules, vars } = build(builders, config);
   console.log(renderRules(rules));

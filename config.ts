@@ -2,7 +2,33 @@ export default {
   typeScale: [3, 2.25, 1.5, 1.25, 1, 0.875, 0.75],
   lineHeight: [1, 1.25, 1.5],
   spacing: [2, 4, 6, 8, 10, 12, 14],
-  customMedia: [{ m: 48 }, { l: 64 }],
+  customMedia: [
+    { s: 20 },
+    {
+      ns: {
+        value: 40,
+        minWidth: true,
+      },
+    },
+    {
+      m: {
+        value: 40,
+        minWidth: true,
+      },
+    },
+    {
+      l: {
+        value: 64,
+        minWidth: true,
+      },
+    },
+    {
+      xl: {
+        value: 80,
+        minWidth: true,
+      },
+    },
+  ],
   opacity: [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.05, 0.025, 0],
   nested: {
     links: ['blue', 'light-blue'],
